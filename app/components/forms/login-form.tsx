@@ -8,6 +8,9 @@ import Link from "next/link";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { cn } from "@/lib/utils";
+import { Button } from "../ui/button";
+import { authClient } from "@/lib/auth-client";
+import Image from "next/image";
 
 // Define the form schema with Zod
 const loginSchema = z.object({
@@ -115,4 +118,21 @@ export default function LoginForm() {
       </div>
     </div>
   );
+}
+
+export function GoogleButton() {
+  "use client";
+  return <Button
+    onClick={() => authClient.signIn.social({ provider: "google", newUserCallbackURL: "/signup" })}
+    className="flex items-center gap-2 w-full max-w-xs"
+    variant="outline"
+    size="lg"
+  >
+    <Image
+      src="/google-logo.svg"
+      alt="Google"
+      width={20}
+      height={20} />
+    <span>Continue with Google</span>
+  </Button>;
 }
